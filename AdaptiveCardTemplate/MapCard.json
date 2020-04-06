@@ -1,0 +1,65 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+        "type": "TextBlock",
+        "text": scenario.bingmapimage[0].name,
+        "weight": "bolder",
+        "size": "large",
+        "spacing": "none",
+        "wrap": "true"
+    },
+    {  
+        "type": "ColumnSet",
+        "columns": [
+        {
+          "type": "Column",
+          "width": 2,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": scenario.bingmapimage[0].address,
+              "wrap": "true"
+            }            
+          ]
+        },
+        {
+          "type": "Column",
+          "width": 1,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "15.1 mi",
+                "weight": "bolder",                
+                "horizontalAlignment":"right"
+            }
+          ]
+        }
+      ]
+    },
+    {
+        "type": "Image",
+        "url": scenario.bingmapimage[0].mapUri,
+        "size": "auto"
+    }
+],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Call",
+      "url": scenario.bingmapimage[0].telephone
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "Directions",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "Website",
+      "url": scenario.bingmapimage[0].url
+    }
+  ]
+}
