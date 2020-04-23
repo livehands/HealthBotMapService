@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HealthBotLocations.Helpers
 {
     public static class Constants
     {
-        public const string CosmosDbName = "locationdb";
-        public const string MyLocationsCollection = "mylocations";
+        //public static string CosmosDbName = Environment.GetEnvironmentVariable("CosmosLocationDbName");
+        //public static string MyLocationsCollection = Environment.GetEnvironmentVariable("CosmosLocationCollectionName");
+        public const string CosmosDbName = "MyLocations";
+        public const string MyLocationsCollection = "locations";
     }
 }

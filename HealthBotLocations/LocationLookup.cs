@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 /// <summary>
@@ -22,15 +23,14 @@ namespace HealthBotLocations
             [CosmosDB(Constants.CosmosDbName,
                       Constants.MyLocationsCollection, 
                       CreateIfNotExists = true,
-                      ConnectionStringSetting = "AzureCosmosDBConnectionString",
-                      SqlQuery = "SELECT Top(3) FROM locations c " +
-                                 "WHERE ST_DISTANCE(c.location, {'type': 'Point', 'coordinates':[{latitude},{longitude}]) < 10000"
+                      ConnectionStringSetting = "AzureCosmosDBConnectionString"
             )] IEnumerable<Location> locations,
             double latitude,
             double longitude,
             ILogger log)
         {
             List<Location> locationResults = new List<Location>();
+
 
             try
             {
