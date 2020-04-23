@@ -23,8 +23,7 @@ namespace HealthBotLocations
                       Constants.MyLocationsCollection, 
                       CreateIfNotExists = true,
                       ConnectionStringSetting = "AzureCosmosDBConnectionString",
-                      SqlQuery = "SELECT Top(3) FROM locations c " +
-                                 "WHERE ST_DISTANCE(c.location, {'type': 'Point', 'coordinates':[{latitude},{longitude}]) < 10000"
+                      SqlQuery = "SELECT FROM locations c WHERE ST_DISTANCE < 10000"
             )] IEnumerable<Location> locations,
             double latitude,
             double longitude,
