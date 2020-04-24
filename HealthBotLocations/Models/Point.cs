@@ -1,8 +1,25 @@
-﻿namespace HealthBotLocations.Models
+﻿using Newtonsoft.Json;
+
+namespace HealthBotLocations.Models
 {
-    public  class Point
+    /// <summary>
+    /// GeoJSON formated Point object used to enable GeoSpatial Queries in Cosmos.
+    /// </summary>
+    public class Point
     {
+        [JsonProperty("type")]
         public string Type => "Point";
-        public double[] Coordinates { get; set; }       
+        [JsonProperty("coordinates")]
+        public double[] Coordinates { get; set; }
+
+        public Point()
+        {
+
+        }
+
+        public Point(double latitude, double longitude)
+        {
+            Coordinates = new double[] { latitude, longitude };
+        }
     }
 }

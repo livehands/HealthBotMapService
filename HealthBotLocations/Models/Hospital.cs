@@ -2,6 +2,10 @@
 
 namespace HealthBotLocations.Models
 {
+    /// <summary>
+    /// DB Model for the obejcts stored in My Cosmos Collection.  
+    /// Leverages the Point type for the GeoSpacial Queries via the Location property
+    /// </summary>
     public class Hospital
     {
         [JsonProperty("facilityId")]
@@ -28,10 +32,8 @@ namespace HealthBotLocations.Models
         public string EmergencyServices { get; set; }
         [JsonProperty("rating")]
         public string Rating { get; set; }
-        [JsonProperty("latitude")]
-        public double Latitude { get; set; }
-        [JsonProperty("longitude")]
-        public double Longitude { get; set; }
+        [JsonProperty("location")]
+        public Point Location { get; set; }
         [JsonProperty("mapImageUrl")]
         public string MapImageUrl { get; set; }
     }
