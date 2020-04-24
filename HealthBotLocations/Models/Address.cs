@@ -1,5 +1,6 @@
 ﻿namespace HealthBotLocations.Models
 {
+    // Helper class to get Address Details from Bing Services.
     public class Address
     {
         public string AddressLine { get; set; }

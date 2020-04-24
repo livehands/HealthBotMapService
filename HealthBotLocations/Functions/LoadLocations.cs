@@ -48,8 +48,7 @@ namespace HealthBotLocations
                         Resource bingLocation = bingLocationSet.Resources.FirstOrDefault();
                         if (bingLocation.Point.Coordinates.Length > 1)
                         {
-                            h.Latitude = bingLocation.Point.Coordinates[0];
-                            h.Longitude = bingLocation.Point.Coordinates[1];
+                            h.Location = new Point(bingLocation.Point.Coordinates[0], bingLocation.Point.Coordinates[1]);
                         }
 
                         //TODO: Get the Map for hte location.
