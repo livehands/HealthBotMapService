@@ -1,5 +1,5 @@
 # COVID-19 Health Bot Location & Routing Services
-This repo provides a solution that that was created as an added component for the Microsoft Health Bot COVID-19 Assessment.  The code base uses the Public APIs from [Google](https://developers.google.com/maps/documentation/maps-static/intro) & [Bing](https://dev.virtualearth.net/). also a Custom Cosmos DB leveraging the geospatial search features  to provide the closest Hospitals & Care centers for those who are considered High Risk after taking the assessment in the bot.  The solution is an Azure Function that wraps the APIs to get the data needed for the the Adaptive Card [(See Sample)](#sample) in the Bot.
+This repo provides a solution that that was created as an added component for the Microsoft Health Bot COVID-19 Assessment.  The code base uses the Public APIs from [Bing](https://dev.virtualearth.net/). also a Custom Cosmos DB leveraging the geospatial search features  to provide the closest Hospitals & Care centers for those who are considered High Risk after taking the assessment in the bot.  The solution is an Azure Function that wraps the APIs to get the data needed for the the Adaptive Card [(See Sample)](#sample) in the Bot.
 
 #### <a name="sample">Adaptive Card Sample</a>
 ![Bing Adaptive Card](./images/map-adaptivecard-bing.png "Bing Adaptive Card")
@@ -8,9 +8,9 @@ This repo provides a solution that that was created as an added component for th
 The [Microsoft Health Bot Service](https://docs.microsoft.com/en-us/HealthBot/quickstart-createyourhealthcarebot) provides a COVID-19 Assessment Template that can allow you to create a bot for people to self-assess themselves for COVID-19. Many hospital systems have hospitals and testing centers that they would like to redirect patients to for further screening if they are "High Risk" after taking the assessment. Currently OOB the Health Bot requires some coding to determine what locations to show to these users.  The solution in this repo addresses this problem.
 
 ## Solution
-To address the problem I took a 2 pronged approach to the solution by providing searches for Hospitals via Bing and/or Google using an Azure Functions Service which wraps the calls to get the hospital locations and return a map with a highlighted route to give the users an better idea of how close the destination is to their location as well as action buttons to Call, get Directions, and the Website for the destination. 
+To address the problem I took a 2 pronged approach to the solution by providing searches for Hospitals via Bing using an Azure Functions Service which wraps the calls to get the hospital locations and return a map with a highlighted route to give the users an better idea of how close the destination is to their location as well as action buttons to Call, get Directions, and the Website for the destination. 
 
-Secondly, there are those customers that wanted to only show their facilities so I created the use of Cosmos DB and leveraged the Geospatial features in the Cosmos DB service to get the "closest" facility in the list of custom facilities stored in Cosmos.  Once retrieved I query Bing/Google to get a map and route information from the users current location.
+Secondly, there are those customers that wanted to only show their facilities so I created the use of Cosmos DB and leveraged the Geospatial features in the Cosmos DB service to get the "closest" facility in the list of custom facilities stored in Cosmos.  Once retrieved I query Bing to get a map and route information from the users current location.
 
 The result is the Adaptive Card shown below.
 
@@ -20,11 +20,10 @@ The result is the Adaptive Card shown below.
 The solution in this repo will require an Azure Subscription with the following Services deployed:
 
 1. [**Azure Function**](https://azure.microsoft.com/en-us/services/functions/) - this will be the main service used to return the location information for the Hospitals and/or Care Centers and will host the endpoints used in the final solution. 
-1. [**Azure Blob Storage Account**](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction) - this is required to store the maps for the Bing/Google Services with the highlighted routes when the Map APIs are called. A Public Anonymous blob container is needed to serve the map images.  
+1. [**Azure Blob Storage Account**](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction) - this is required to store the maps for the Bing Services with the highlighted routes when the Map APIs are called. A Public Anonymous blob container is needed to serve the map images.  
 1. [**Microsoft Health Bot Service**](https://docs.microsoft.com/en-us/HealthBot/quickstart-createyourhealthcarebot) - This is the Health Bot Service that has the COVID-19 scenario template we are using for our bot.  
 1. [**Health Bot Container**](https://github.com/Microsoft/HealthBotContainerSample) - the chat bot container which connects to our Health Bot Service.
 1. **(Optional) [Bing Map API](http://dev.virtualearth.net/)** -  You will need a Bing Maps API Key to use the Bing Map services for your Azure Function.  You can follow the steps [here to acquire a key](https://www.microsoft.com/en-us/maps/create-a-bing-maps-key).
-1. **(Optional) [Google Map API](https://developers.google.com/maps/documentation/maps-static/intro)** -  You will need a Google Maps API Key to use the Google Map services for your Azure Function.  You can follow the steps [here to acquire a key](https://developers.google.com/maps/documentation/maps-static/get-api-key).
 1. **(Optional) [Cosmos DB Service](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction)** - The solution uses Cosmos DB as the data store for all _"Custom"_ locations you want to store on your own.  The solution uses the [geospatial query features in Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/sql-query-geospatial-intro) to find the closest locations from your data set to the current user. 
 
 ## How to Deploy
@@ -56,9 +55,9 @@ Add the following Application Settings to your Azure Functions App after deploym
 Once the Azure Function solution is deployed there are three (3) main end points that will be of use:
 
 ### <a name=endpoints>Endpoints</a>
-1. **Google EndPoint** - located at **api/google/{lat}/{long}** will leverage the [Google Map APIs](https://developers.google.com/maps/documentation/maps-static/intro).  You will need to have a Google Map Key configured in the Application Settings for the Azure Function.
 1. **Bing EndPoint** - located at **api/google/{lat}/{long}** will leverage the [Bing Map APIs](https://dev.virtualearth.net/).  You will need to have a Bing Maps Key configured in the Application Settings for the Azure Function.
-1. **Custom (Cosmos DB) EndPoint** - located at **api/custom/{lat}/{long}** will use the Cosmos DB geospatial features to find the closest locations in your own private data set of locations.  
+1. **Custom (Cosmos DB) EndPoint** - located at **api/custom/{lat}/{long}** will use the Cosmos DB geospatial features to find the closest locations in your own private data set of locations. 
+1. **Custom Location Find By Zip** - located at **api/zip/{zipCode}** will lookup the closest locations based on the zipCode parameter passed.  Leverages the above End Point once the lat/long of the Zip code is retrieved from Bing 
 
 Once you have the code deployed you can just call these end points with the **_Latitude {lat} & Longitude {long}_** parameters from your Health Bot scenario using the [Data Connection](https://docs.microsoft.com/en-us/HealthBot/scenario-authoring/advanced_functionality#data-connections) functionality.  
 
