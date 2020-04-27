@@ -55,7 +55,7 @@ Add the following Application Settings to your Azure Functions App after deploym
 Once the Azure Function solution is deployed there are three (3) main end points that will be of use:
 
 ### <a name=endpoints>Endpoints</a>
-1. **Bing EndPoint** - located at **api/google/{lat}/{long}** will leverage the [Bing Map APIs](https://dev.virtualearth.net/).  You will need to have a Bing Maps Key configured in the Application Settings for the Azure Function.
+1. **Bing EndPoint** - located at **api/bing/{lat}/{long}** will leverage the [Bing Map APIs](https://dev.virtualearth.net/).  You will need to have a Bing Maps Key configured in the Application Settings for the Azure Function.
 1. **Custom (Cosmos DB) EndPoint** - located at **api/custom/{lat}/{long}** will use the Cosmos DB geospatial features to find the closest locations in your own private data set of locations. 
 1. **Custom Location Find By Zip** - located at **api/zip/{zipCode}** will lookup the closest locations based on the zipCode parameter passed.  Leverages the above End Point once the lat/long of the Zip code is retrieved from Bing 
 
