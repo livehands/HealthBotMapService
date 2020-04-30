@@ -18,7 +18,7 @@ namespace HealthBotLocations.Models
         public string City { get; set; }
         [JsonProperty("state")]
         public string State { get; set; }
-        [JsonProperty("Zip")]
+        [JsonProperty("zip")]
         public string Zip { get; set; }
         [JsonProperty("county")]
         public string County { get; set; }
